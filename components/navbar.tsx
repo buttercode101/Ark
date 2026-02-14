@@ -9,6 +9,8 @@ const links = [
   ['About', '/about'],
   ['Artists', '/artists'],
   ['Exhibitions', '/exhibitions'],
+  ['Exhibitions', '/exhibitions'],
+  ['Artists', '/artists'],
   ['Visit', '/visit'],
   ['Contact', '/contact']
 ];

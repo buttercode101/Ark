@@ -29,6 +29,7 @@ export default function ContactPage() {
           <button className="w-fit border border-ink/20 px-5 py-2 text-xs uppercase tracking-[0.2em]">{newsletterContent.cta}</button>
         </form>
       </div>
+      <p className="mt-6 text-sm text-ink/70">Form submissions are structured for Supabase persistence and optional email edge-function notifications.</p>
     </div>
   );
 }

@@ -22,6 +22,17 @@ export function Footer() {
           <div className="mt-3 flex flex-col gap-2 text-sm">
             <a href={`mailto:${contactInfo.email}`}>{contactInfo.email}</a>
             <a href={contactInfo.instagram}>Instagram</a>
+          <p className="mt-3 text-sm text-ink/70">Rosendal, Free State, South Africa</p>
+        </div>
+        <div>
+          <p className="section-label">Hours</p>
+          <p className="mt-3 text-sm text-ink/70">Thu–Sun · 10:00–16:00</p>
+        </div>
+        <div>
+          <p className="section-label">Connect</p>
+          <div className="mt-3 flex gap-4 text-sm">
+            <Link href="#">Instagram</Link>
+            <Link href="#">WhatsApp</Link>
             <Link href="/contact">Inquire</Link>
           </div>
         </div>
