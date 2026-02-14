@@ -6,6 +6,9 @@ import { AnimatePresence, motion } from 'framer-motion';
 
 const links = [
   ['Home', '/'],
+  ['About', '/about'],
+  ['Artists', '/artists'],
+  ['Exhibitions', '/exhibitions'],
   ['Exhibitions', '/exhibitions'],
   ['Artists', '/artists'],
   ['Visit', '/visit'],

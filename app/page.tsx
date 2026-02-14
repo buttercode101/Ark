@@ -4,12 +4,15 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { AnimatedSection } from '@/components/animated-section';
+import { artists, exhibitions, featuredArtworks, contactInfo, newsletterContent } from '@/lib/data';
 import { artists, exhibitions, featuredArtworks } from '@/lib/data';
 
 export default function HomePage() {
   return (
     <div className="space-y-24 pb-8">
       <section className="relative min-h-[84vh] overflow-hidden">
+        <motion.div initial={{ scale: 1.08 }} animate={{ scale: 1 }} transition={{ duration: 1.8 }} className="absolute inset-0">
+          <Image src={contactInfo.homeHero} alt="ARK Contemporary home" fill className="object-cover" priority />
         <motion.div initial={{ scale: 1.1 }} animate={{ scale: 1 }} transition={{ duration: 1.8 }} className="absolute inset-0">
           <Image src={exhibitions.current.hero} alt="Current exhibition" fill className="object-cover" priority />
           <div className="absolute inset-0 bg-black/35" />
@@ -18,6 +21,7 @@ export default function HomePage() {
           <p className="section-label !text-bg/80">Current Exhibition</p>
           <h1 className="editorial-title mt-3 max-w-3xl text-5xl md:text-7xl">{exhibitions.current.title}</h1>
           <p className="mt-3 max-w-2xl text-bg/90">{exhibitions.current.description}</p>
+          <Link href="/exhibitions" className="mt-7 w-fit border border-bg/50 px-6 py-3 text-sm uppercase tracking-[0.22em] hover:bg-bg hover:text-ink transition-colors">View Exhibition</Link>
           <Link href="/exhibitions" className="mt-7 w-fit border border-bg/50 px-6 py-3 text-sm uppercase tracking-[0.22em] hover:bg-bg hover:text-ink transition-colors">
             View Exhibition
           </Link>
@@ -36,6 +40,7 @@ export default function HomePage() {
                 <div className="space-y-1 p-5 text-sm">
                   <p className="font-medium">{art.title}</p>
                   <p className="text-ink/70">{art.artist}</p>
+                  <p className="text-terracotta">{art.medium}</p>
                   <p className="text-terracotta">{art.price}</p>
                 </div>
               </article>
@@ -58,6 +63,14 @@ export default function HomePage() {
       </AnimatedSection>
 
       <AnimatedSection>
+        <section className="mx-auto w-[min(900px,92vw)] border border-ink/10 p-8 text-center">
+          <p className="section-label">Newsletter</p>
+          <h2 className="editorial-title mt-2 text-4xl">{newsletterContent.title}</h2>
+          <form className="mx-auto mt-6 grid max-w-md gap-3">
+            <input className="border border-ink/20 bg-white px-4 py-3 text-sm" placeholder={newsletterContent.fields[0]} />
+            <input className="border border-ink/20 bg-white px-4 py-3 text-sm" placeholder={newsletterContent.fields[1]} />
+            <button className="mx-auto w-fit border border-ink/20 px-5 py-2 text-xs uppercase tracking-[0.2em]">{newsletterContent.cta}</button>
+          </form>
         <section className="mx-auto w-[min(1100px,92vw)] rounded-sm bg-mist p-10 text-center">
           <p className="section-label">Visit the Gallery</p>
           <h2 className="editorial-title mt-4 text-4xl">A destination gallery in the quiet heart of Rosendal.</h2>
