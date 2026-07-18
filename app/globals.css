@@ -6,8 +6,37 @@
   color-scheme: light;
 }
 
-body {
-  @apply bg-bg text-ink antialiased;
+@layer base {
+  body {
+    @apply bg-bg text-ink antialiased;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background: theme('colors.terracotta');
+    color: theme('colors.bg');
+  }
+
+  /* Hide the native cursor only where our custom one runs (fine pointer). */
+  @media (pointer: fine) {
+    a,
+    button,
+    [data-cursor='grow'] {
+      cursor: none;
+    }
+  }
+}
+
+/* Film-grain overlay — gives imagery a printed, gallery feel. */
+.grain::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 .section-label {
@@ -15,11 +44,37 @@ body {
 }
 
 .editorial-title {
-  @apply font-serif italic leading-tight;
+  @apply font-serif italic leading-[0.98];
 }
 
 .glass {
   backdrop-filter: blur(12px);
   background: rgba(252, 250, 247, 0.75);
   border: 1px solid rgba(2, 6, 23, 0.06);
+}
+
+/* Slow ambient drift for hero atmosphere. */
+@keyframes drift {
+  0% { transform: scale(1.05) translate3d(0, 0, 0); }
+  100% { transform: scale(1.12) translate3d(-1.5%, -1.5%, 0); }
+}
+.animate-drift {
+  animation: drift 18s ease-in-out infinite alternate;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-drift {
+    animation: none;
+  }
+}
+
+/* Respect reduced motion for all transforms globally as a safety net. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
 }
