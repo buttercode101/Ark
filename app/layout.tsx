@@ -11,18 +11,24 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: 'ARK Contemporary — Digital Exhibition Space',
-  description: 'A premium contemporary gallery experience for Rosendal, South Africa.',
+  title: {
+    default: 'ark. contemporary — art + rosendal + kuns',
+    template: '%s · ark. contemporary'
+  },
+  description:
+    'A contemporary gallery in Rosendal, Free State, South Africa — showcasing the collective endeavours of a group of accomplished Rosendal-based artists.',
   openGraph: {
-    title: 'ARK Contemporary — Digital Exhibition Space',
-    description: 'A premium contemporary gallery experience for Rosendal, South Africa.',
+    title: 'ark. contemporary — art + rosendal + kuns',
+    description:
+      'A contemporary gallery in Rosendal, Free State, South Africa showcasing Rosendal-based artists.',
     type: 'website',
     url: siteUrl
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'ARK Contemporary — Digital Exhibition Space',
-    description: 'A premium contemporary gallery experience for Rosendal, South Africa.'
+    title: 'ark. contemporary — art + rosendal + kuns',
+    description:
+      'A contemporary gallery in Rosendal, Free State, South Africa showcasing Rosendal-based artists.'
   }
 };
 
