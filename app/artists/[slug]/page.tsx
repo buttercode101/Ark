@@ -1,13 +1,15 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { artists, featuredArtworks } from '@/lib/data';
+import { artists, gallery } from '@/lib/data';
+
+export function generateStaticParams() {
+  return artists.map((a) => ({ slug: a.slug }));
+}
 
 export default function ArtistProfile({ params }: { params: { slug: string } }) {
   const artist = artists.find((entry) => entry.slug === params.slug);
   if (!artist) return notFound();
-
-  const works = featuredArtworks.filter((work) => work.artist === artist.name);
 
   return (
     <div className="mx-auto w-[min(1100px,92vw)] space-y-12 py-8">
@@ -16,37 +18,30 @@ export default function ArtistProfile({ params }: { params: { slug: string } }) 
           <p className="section-label">Artist Profile</p>
           <h1 className="editorial-title mt-3 text-5xl md:text-6xl">{artist.name}</h1>
           <p className="mt-3 text-ink/70">{artist.tagline}</p>
-          <div className="mt-8 grid gap-6 md:grid-cols-2 text-sm leading-relaxed">
+          <div className="mt-8 grid gap-6 text-sm leading-relaxed">
             <p>{artist.bio}</p>
-            <p>{artist.statement}</p>
+            <blockquote className="border-l-2 border-terracotta pl-4 italic text-ink/80">
+              {artist.statement}
+            </blockquote>
           </div>
+          <a
+            href={`mailto:${gallery.email}?subject=${encodeURIComponent(
+              `Inquiry — ${artist.name}`
+            )}`}
+            className="mt-6 inline-block border border-ink/20 px-5 py-3 text-xs uppercase tracking-[0.2em] transition-colors hover:bg-ink hover:text-bg"
+          >
+            Inquire about works
+          </a>
         </div>
         <div className="relative h-[520px] overflow-hidden rounded-sm">
           <Image src={artist.portrait} alt={artist.name} fill className="object-cover grayscale" />
         </div>
       </header>
 
-      <section>
-        <p className="section-label">Selected Works</p>
-        <div className="mt-6 space-y-6">
-          {works.map((work, idx) => (
-            <article key={work.id} className="grid gap-5 border border-ink/10 p-4 md:grid-cols-2">
-              <div className={`relative h-[320px] overflow-hidden ${idx % 2 ? 'md:order-2' : ''}`}>
-                <Image src={work.image} alt={work.title} fill className="object-cover transition duration-500 hover:scale-105" />
-              </div>
-              <div className="flex flex-col justify-center gap-2 text-sm">
-                <p className="text-2xl font-serif italic">{work.title}</p>
-                <p>{work.medium} · {work.size}</p>
-                <p className="text-terracotta">{work.price}</p>
-                <button className="mt-3 w-fit border border-ink/20 px-4 py-2 text-xs uppercase tracking-[0.2em]">Inquire</button>
-              </div>
-            </article>
-          ))}
-        </div>
-      </section>
-
       <nav className="border-t border-ink/10 pt-6 text-sm">
-        <Link href="/artists" className="hover:text-terracotta">Back to all artists</Link>
+        <Link href="/artists" className="hover:text-terracotta">
+          Back to all artists
+        </Link>
       </nav>
     </div>
   );
