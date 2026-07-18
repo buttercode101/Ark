@@ -23,5 +23,9 @@ yarn-error.log*
 .env*.local
 .env
 
+# Next.js generated
+next-env.d.ts
+tsconfig.tsbuildinfo
+
 # persisted inquiry demo data (gitignored; .data/ is runtime output)
 /.data/
