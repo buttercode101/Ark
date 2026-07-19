@@ -1,12 +1,17 @@
 import type { Metadata } from 'next';
-import { Playfair_Display, Inter } from 'next/font/google';
+import { Cormorant_Garamond, Work_Sans } from 'next/font/google';
 import './globals.css';
 import { Navbar } from '@/components/navbar';
 import { Footer } from '@/components/footer';
 import { CustomCursor } from '@/components/motion/cursor';
 
-const serif = Playfair_Display({ subsets: ['latin'], variable: '--font-serif' });
-const sans = Inter({ subsets: ['latin'], variable: '--font-sans' });
+const serif = Cormorant_Garamond({
+  subsets: ['latin'],
+  variable: '--font-serif',
+  weight: ['400', '500', '600', '700'],
+  style: ['normal', 'italic']
+});
+const sans = Work_Sans({ subsets: ['latin'], variable: '--font-sans', weight: ['300', '400', '500', '600'] });
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
 
@@ -35,7 +40,16 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${serif.variable} ${sans.variable}`}>
+    <html lang="en" className={`${serif.variable} ${sans.variable}`} suppressHydrationWarning>
+      <head>
+        {/* Mark JS as available BEFORE paint so content-gated reveals stay
+            visible for no-JS / headless crawlers (SEO) and only animate when JS is live. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `document.documentElement.classList.add('js-enabled');`
+          }}
+        />
+      </head>
       <body className="grain">
         <CustomCursor />
         <Navbar />

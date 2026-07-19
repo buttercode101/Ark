@@ -4,6 +4,13 @@ import { motion, useInView, useReducedMotion } from 'framer-motion';
 import { useRef, type ReactNode } from 'react';
 import { EASE, DURATION, fadeRise, stagger } from '@/lib/motion';
 
+// JS-gated reveals: content ships VISIBLE in SSR HTML (so no-JS crawlers /
+// headless renders see it), then only animates once the `js-enabled` class
+// (set by an inline pre-paint script in layout.tsx) confirms JS is live.
+// Prevents the "blank page without JS" failure mode.
+const hasJs = () =>
+  typeof document !== 'undefined' && document.documentElement.classList.contains('js-enabled');
+
 // Fade + rise a block when it scrolls into view.
 export function Reveal({
   children,
@@ -17,13 +24,15 @@ export function Reveal({
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: '-12% 0px' });
   const reduce = useReducedMotion();
+  // No JS, or reduced-motion, or not yet enabled → render in final state.
+  const animate = !hasJs() || reduce ? 'visible' : inView ? 'visible' : 'hidden';
   return (
     <motion.div
       ref={ref}
       className={className}
       variants={fadeRise}
-      initial={reduce ? false : 'hidden'}
-      animate={inView ? 'visible' : 'hidden'}
+      initial={!hasJs() || reduce ? false : 'hidden'}
+      animate={animate}
       transition={{ delay }}
     >
       {children}
@@ -45,13 +54,14 @@ export function Stagger({
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: '-10% 0px' });
+  const animate = !hasJs() ? 'visible' : inView ? 'visible' : 'hidden';
   return (
     <motion.div
       ref={ref}
       className={className}
       variants={stagger(st, delay)}
-      initial="hidden"
-      animate={inView ? 'visible' : 'hidden'}
+      initial={!hasJs() ? false : 'hidden'}
+      animate={animate}
     >
       {children}
     </motion.div>

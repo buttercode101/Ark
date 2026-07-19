@@ -9,7 +9,6 @@ export default function ArtistsPage() {
   return (
     <section className="mx-auto w-[min(1100px,92vw)] py-8">
       <Reveal>
-        <p className="section-label">Artists</p>
         <h1 className="editorial-title mt-3 text-5xl md:text-7xl">
           <LineText>Gallery Roster</LineText>
         </h1>

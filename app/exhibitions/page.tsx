@@ -52,9 +52,6 @@ export default function ExhibitionsPage() {
       </section>
 
       <section>
-        <Reveal>
-          <p className="section-label">Featured in this exhibition</p>
-        </Reveal>
         <Stagger className="mt-5 grid gap-5 md:grid-cols-3">
           {featuredArtworks.map((work) => (
             <StaggerItem key={work.id} className="border border-ink/10 p-3 text-sm">

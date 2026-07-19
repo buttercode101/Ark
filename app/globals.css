@@ -43,8 +43,37 @@
   @apply uppercase tracking-[0.3em] text-xs text-terracotta font-medium;
 }
 
+/* Editorial eyebrow — borrowed from the reimagined system: tracked, refined. */
+.eyebrow {
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: theme('colors.terracotta');
+}
+
 .editorial-title {
   @apply font-serif italic leading-[0.98];
+}
+
+/* Pill button base — rounded-full editorial CTA. */
+.btn-pill {
+  @apply inline-flex items-center gap-2 rounded-full border border-ink/20 px-7 py-3 text-xs uppercase tracking-[0.2em] transition-colors duration-300;
+}
+.btn-pill:hover {
+  @apply bg-ink text-bg;
+}
+
+/* Card image hover: slow scale + gradient veil. */
+.img-card {
+  @apply relative overflow-hidden;
+}
+.img-card img {
+  @apply transition-transform duration-[900ms] ease-out;
+}
+.img-card:hover img {
+  @apply scale-105;
 }
 
 .glass {
